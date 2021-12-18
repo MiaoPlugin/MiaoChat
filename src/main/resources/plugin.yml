@@ -25,7 +25,7 @@ permissions:
     default: true
   ${project.artifactId}.color:
     description: 彩字聊天权限!
-    default: true
+    default: op
   ${project.artifactId}.admin:
     description: 管理员格式权限!
     default: op
