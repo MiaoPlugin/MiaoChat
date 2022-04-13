@@ -1,12 +1,5 @@
 package pw.yumc.MiaoChat.listeners;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -16,7 +9,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.ItemStack;
-
 import pw.yumc.MiaoChat.MiaoChat;
 import pw.yumc.MiaoChat.MiaoMessage;
 import pw.yumc.MiaoChat.config.ChatConfig;
@@ -28,14 +20,18 @@ import pw.yumc.YumCore.statistic.Statistics;
 import pw.yumc.YumCore.tellraw.Tellraw;
 import pw.yumc.YumCore.update.SubscribeTask;
 
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * @author MiaoWoo
  */
 public class ChatListener implements Listener {
     public static Set<Player> offList = new HashSet<>();
-    private static Pattern ITEM_PATTERN = Pattern.compile("%([i1-9]?)");
-
-    private final Queue<String> queue = new LinkedList<>();
+    private static Pattern PATTERN = Pattern.compile("%([a-z1-9]?)");
 
     private MiaoChat plugin = P.getPlugin();
     private ChatConfig cc = plugin.getChatConfig();
@@ -85,7 +81,7 @@ public class ChatListener implements Listener {
     }
 
     private LinkedList<String> handlePattern(String message) {
-        Matcher m = ITEM_PATTERN.matcher(message);
+        Matcher m = PATTERN.matcher(message);
         Set<String> temp = new HashSet<>();
         LinkedList<String> ilist = new LinkedList<>();
         // Log.d("处理聊天物品信息...");
@@ -126,7 +122,7 @@ public class ChatListener implements Listener {
     }
 
     private Tellraw handleTellraw(Player player, Tellraw tr, ChatRule cr, String message) {
-        if (message.isEmpty()) { return tr; }
+        if (message.isEmpty()) {return tr;}
         if (player.hasPermission("MiaoChat.color")) {
             message = ChatColor.translateAlternateColorCodes('&', message);
         }
@@ -151,6 +147,17 @@ public class ChatListener implements Listener {
                     // Log.d("处理物品: %s", mm);
                     tr.then(String.format(ChatColor.translateAlternateColorCodes('&', cr.getItemformat()), L10N.getName(is)));
                     tr.item(is);
+                } else {
+                    String key = String.valueOf(k);
+                    if (plugin.getChatConfig().getFormats().containsKey(key)) {
+                        if (!player.hasPermission("MiaoChat.format.*") && player.hasPermission("MiaoChat.format." + k)) {
+                            Log.sender(player, "§c你没有使用 " + mm + " 的权限!");
+                            continue;
+                        }
+                        plugin.getChatConfig().getFormats().get(key).then(tr, player);
+                    } else {
+                        tr.then(cr.getLastColor() + mm);
+                    }
                 }
             } else {
                 // Log.d("追加聊天: %s", mm);

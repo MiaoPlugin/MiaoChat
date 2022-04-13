@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>MiaoChat</artifactId>
-    <version>2.0.0</version>
+    <version>2.1.1</version>
 
     <parent>
         <groupId>pw.yumc</groupId>
@@ -13,13 +13,15 @@
     </parent>
 
     <properties>
-        <update.description>§a正式版本 §bv2.0.0 §b全新版本(号) 配合龙核食用</update.description>
+        <update.description>§a正式版本 §bv2.1.1 §b兼容 1.18.2</update.description>
         <update.changes>
-            §621-12-18 §a增强: 全新版本(号) 新增 itemTip 配合龙核 实现神奇功能;
-            §621-12-06 §a增强: 兼容 1.18 版本 兼容新版PAPI;
-            §621-06-20 §a增强: 兼容 1.17 版本
+            §622-04-12 §a增强: 兼容 1.18.2 修复 PAPI 注销报错;
+            §622-02-25 §a增强: 新增 %a-z 自定义解析 实现神奇功能 兼容 1.18.1#133+;
+            §621-12-18 §a增强: 全新版本(号) 新增 itemTip 配合龙核 实现神奇功能
         </update.changes>
         <update.changelog>
+            §621-12-06 §a增强: 兼容 1.18 版本 兼容新版PAPI;
+            §621-06-20 §a增强: 兼容 1.17 版本;
             §620-10-10 §c修复: 1.16.3聊天包格式调整的问题;
             §620-04-10 §c修复: L10N 本地化组件报错的问题;
             §620-04-09 §c修复: 1.13-1.15.2新增物品不兼容的问题;

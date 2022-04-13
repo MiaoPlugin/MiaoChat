@@ -48,3 +48,24 @@ help:
   click:
     type: 'COMMAND'
     command: '管理员@%player_name% 我需要你的帮助!'
+l:
+  text: '&6[&b点击看我仓库]&6'
+  #  item:
+  #    # 物品枚举
+  #    type: STONE
+  #    # 物品子ID
+  #    damage: 0
+  #    # 物品名称(用于萌芽/龙核匹配) 为空则使用 text
+  #    name: '§g§s§p'
+  tip:
+    - '&a点击查看 &b%player_name% &a的仓库'
+  click:
+    type: 'COMMAND'
+    command: '/mgs look %player_name% local 1'
+t:
+  text: '&6[&b点击和我交易&6]&r'
+  tip:
+    - '&a点击和 &b%player_name% &a发起交易'
+  click:
+    type: 'COMMAND'
+    command: '/trade %player_name%'
