@@ -67,7 +67,7 @@ public class MiaoChat extends JavaPlugin implements Executor, PluginMessageListe
 
     @Override
     public void onDisable() {
-        try {this.expansion.unregister();} catch (Exception ignored) {}
+        try {this.expansion.unregister();} catch (Throwable ignored) {}
     }
 
     private void enableBungeeCord() {
