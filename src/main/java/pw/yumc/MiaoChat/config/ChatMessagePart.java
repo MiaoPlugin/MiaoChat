@@ -3,12 +3,14 @@ package pw.yumc.MiaoChat.config;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
+import pw.yumc.MiaoChat.MiaoMessage;
 import pw.yumc.YumCore.config.annotation.ConfigNode;
 import pw.yumc.YumCore.config.annotation.Nullable;
 import pw.yumc.YumCore.config.inject.InjectConfigurationSection;
 import pw.yumc.YumCore.tellraw.Tellraw;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ChatMessagePart extends InjectConfigurationSection {
     private String text;
@@ -53,10 +55,10 @@ public class ChatMessagePart extends InjectConfigurationSection {
     }
 
     private List<String> f(Player player, List<String> text) {
-        return PlaceholderAPI.setPlaceholders(player, text);
+        return text.stream().map((line) -> f(player, line)).collect(Collectors.toList());
     }
 
     private String f(Player player, String text) {
-        return PlaceholderAPI.setPlaceholders(player, text);
+        return MiaoMessage.rgb(PlaceholderAPI.setPlaceholders(player, text));
     }
 }

@@ -26,6 +26,9 @@ permissions:
   ${project.artifactId}.color:
     description: 彩字聊天权限!
     default: op
+  ${project.artifactId}.rgb:
+    description: RGB聊天权限!
+    default: op
   ${project.artifactId}.admin:
     description: 管理员格式权限!
     default: op

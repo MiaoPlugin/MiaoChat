@@ -1,19 +1,18 @@
 package pw.yumc.MiaoChat.config;
 
-import java.util.LinkedList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
-
-import me.clip.placeholderapi.PlaceholderAPI;
 import pw.yumc.MiaoChat.MiaoChat;
 import pw.yumc.YumCore.bukkit.P;
 import pw.yumc.YumCore.config.annotation.Default;
 import pw.yumc.YumCore.config.inject.InjectConfigurationSection;
 import pw.yumc.YumCore.tellraw.Tellraw;
+
+import java.util.LinkedList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 聊天规则
@@ -22,8 +21,9 @@ import pw.yumc.YumCore.tellraw.Tellraw;
  * @since 2016年9月9日 下午4:59:47
  */
 public class ChatRule extends InjectConfigurationSection {
-    private transient static MiaoChat plugin = P.getPlugin();
-    private transient static Pattern FORMAT_PATTERN = Pattern.compile("[\\[]([^\\[\\]]+)[]]");
+    private final transient static MiaoChat plugin = P.getPlugin();
+    private final transient static Pattern FORMAT_PATTERN = Pattern.compile("[\\[]([^\\[\\]]+)[]]");
+
     private transient String name;
     @Default("50")
     private Integer index;

@@ -126,6 +126,9 @@ public class ChatListener implements Listener {
         if (player.hasPermission("MiaoChat.color")) {
             message = ChatColor.translateAlternateColorCodes('&', message);
         }
+        if (player.hasPermission("MiaoChat.rgb")) {
+            message = MiaoMessage.rgb(message);
+        }
         if (!cr.isItem()) {
             tr.then(message);
             return tr;
@@ -142,19 +145,27 @@ public class ChatListener implements Listener {
             String mm = ml.removeFirst();
             if (il.contains(mm)) {
                 char k = mm.charAt(1);
-                ItemStack is = k == 'i' ? player.getItemInHand() : player.getInventory().getItem(k - '0' - 1);
-                if (is != null && is.getType() != Material.AIR) {
-                    // Log.d("处理物品: %s", mm);
-                    tr.then(String.format(ChatColor.translateAlternateColorCodes('&', cr.getItemformat()), L10N.getName(is)));
-                    tr.item(is);
+                String key = String.valueOf(k);
+                if (plugin.getChatConfig().getFormats().containsKey(key)) {
+                    if (!player.hasPermission("MiaoChat.format.*") && player.hasPermission("MiaoChat.format." + k)) {
+                        Log.sender(player, "§c你没有使用 " + mm + " 的权限!");
+                        continue;
+                    }
+                    plugin.getChatConfig().getFormats().get(key).then(tr, player);
                 } else {
-                    String key = String.valueOf(k);
-                    if (plugin.getChatConfig().getFormats().containsKey(key)) {
-                        if (!player.hasPermission("MiaoChat.format.*") && player.hasPermission("MiaoChat.format." + k)) {
-                            Log.sender(player, "§c你没有使用 " + mm + " 的权限!");
-                            continue;
+                    ItemStack is = null;
+                    if (k == 'i') {
+                        is = player.getItemInHand();
+                    } else {
+                        int index = k - '0' - 1;
+                        if (index < 10) {
+                            is = player.getInventory().getItem(index);
                         }
-                        plugin.getChatConfig().getFormats().get(key).then(tr, player);
+                    }
+                    if (is != null && is.getType() != Material.AIR) {
+                        // Log.d("处理物品: %s", mm);
+                        tr.then(String.format(ChatColor.translateAlternateColorCodes('&', cr.getItemformat()), L10N.getName(is)));
+                        tr.item(is);
                     } else {
                         tr.then(cr.getLastColor() + mm);
                     }
